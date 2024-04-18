@@ -4,6 +4,9 @@ from faicons import icon_svg
 from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins 
+from shinyswatch import theme
+
+theme.united()
 
 df = palmerpenguins.load_penguins()
 
