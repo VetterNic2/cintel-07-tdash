@@ -7,14 +7,18 @@ from shiny.express import input, render, ui
 import palmerpenguins 
 from shinyswatch import theme
 
-theme.united()
+# Importing necessary libraries
+theme.united()  # Applying the 'united' theme from shinyswatch to the Shiny.express app
 
+# Loading the penguins dataset
 df = palmerpenguins.load_penguins()
 
+# Creating a Title with page_opts function
 ui.page_opts(title="Penguins dashboard", fillable=True)
 
-
+# Creating the sidebar with filters. The user can adjust these and the data will change with the input.
 with ui.sidebar(title="Filter controls"):
+    # Adding input controls for filtering by mass and species
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
     ui.input_checkbox_group(
         "species",
@@ -22,7 +26,8 @@ with ui.sidebar(title="Filter controls"):
         ["Adelie", "Gentoo", "Chinstrap"],
         selected=["Adelie", "Gentoo", "Chinstrap"],
     )
-    ui.hr()
+    # Personal and Template Links
+    ui.hr()  # Horizontal line for separation
     ui.h6("Links")
     ui.a(
         "GitHub Source",
@@ -51,7 +56,7 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
 
-
+# Creating value boxes for showing data
 with ui.layout_column_wrap(fill=False):
     with ui.value_box(showcase=icon_svg("earlybirds")):
         "Number of penguins"
@@ -74,11 +79,12 @@ with ui.layout_column_wrap(fill=False):
         def bill_depth():
             return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
 
-
+# Creating cards for showing charts and df
 with ui.layout_columns():
     with ui.card(full_screen=True):
         ui.card_header("Bill length and depth")
 
+        # Rendering a scatter plot of bill length vs. bill depth
         @render_plotly
         def length_depth():
             return px.scatter(
@@ -91,6 +97,7 @@ with ui.layout_columns():
     with ui.card(full_screen=True):
         ui.card_header("Penguin Data")
 
+        # Creating stats summary data frame
         @render.data_frame
         def summary_statistics():
             cols = [
@@ -102,12 +109,10 @@ with ui.layout_columns():
             ]
             return render.DataGrid(filtered_df()[cols], filters=True)
 
-
-#ui.include_css(app_dir / "styles.css")
-
-
+# Reactive function for filtering the dataset based on input controls that user selects in the sidebar
 @reactive.calc
 def filtered_df():
     filt_df = df[df["species"].isin(input.species())]
     filt_df = filt_df.loc[filt_df["body_mass_g"] < input.mass()]
     return filt_df
+
