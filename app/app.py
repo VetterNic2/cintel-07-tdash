@@ -22,17 +22,17 @@ with ui.sidebar(title="Filter controls"):
     ui.h6("Links")
     ui.a(
         "GitHub Source",
-        href="https://github.com/denisecase/cintel-07-tdash",
+        href="https://github.com/VetterNic2/cintel-07-tdash",
         target="_blank",
     )
     ui.a(
         "GitHub App",
-        href="https://denisecase.github.io/cintel-07-tdash/",
+        href="https://VetterNic2.github.io/cintel-07-tdash/",
         target="_blank",
     )
     ui.a(
         "GitHub Issues",
-        href="https://github.com/denisecase/cintel-07-tdash/issues",
+        href="https://github.com/VetterNic2/cintel-07-tdash/issues",
         target="_blank",
     )
     ui.a("PyShiny", href="https://shiny.posit.co/py/", target="_blank")
@@ -85,7 +85,7 @@ with ui.layout_columns():
             )
 
     with ui.card(full_screen=True):
-        ui.card_header("Penguin da")
+        ui.card_header("Penguin Data")
 
         @render.data_frame
         def summary_statistics():
